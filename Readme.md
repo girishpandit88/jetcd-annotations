@@ -4,6 +4,22 @@ EtcdJava annotations
 
 ##Usage
 
+####Starting etcd locally
+
+This step assumes you have a docker daemon running locally. I use docker-machine for OSX, 
+so I use its IP as a HOST_IP for etcd server IP.
+
+```bash
+> cd etc
+> ./start-jetcd.sh
+```
+You can verify that etcd is running locally by running following command
+```bash
+> export ETCD_IP=$(docker-machine ip default)
+> curl -L ETCD_IP/version
+```
+You can then use this IP and supply in `application.conf` under `etcd.endpoint` config property.
+
 ####Installing the EtcdCacheableModule
 ```java
 final Injector injector = Guice.createInjector(
