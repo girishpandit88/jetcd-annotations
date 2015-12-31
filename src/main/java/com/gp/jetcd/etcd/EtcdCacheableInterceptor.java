@@ -36,7 +36,7 @@ public class EtcdCacheableInterceptor implements MethodInterceptor {
 					outerResponse[0] = promise.getNow();
 					if (outerResponse[0] != null) {
 						value[0] = outerResponse[0].node.value;
-						log.info("Coming out of etcd -> {}", value[0]);
+						log.debug("Coming out of etcd -> {}", value[0]);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
