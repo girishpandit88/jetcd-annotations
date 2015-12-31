@@ -1,21 +1,19 @@
 EtcdJava annotations
 ======================================
-coreos/etcd is a highly available key-value store. There are many java etcd clients out there. This project add ability 
-to haveannotations for caching values into etcd using the java etcd client.
+[coreos/etcd](https://github.com/coreos/etcd) is a distributed highly available key-value store. There are many java etcd clients out there. This project adds ability to annotate methods, variables for caching values into etcd using the java etcd client.
 
 ##Usage
 
 ####Installing the EtcdCacheableModule
 ```java
 final Injector injector = Guice.createInjector(
-				new AbstractModule() {
-					@Override
-					protected void configure() {
-						bind(RandomNumberGenerator.class);
-						install(new EtcdCacheableModule(config));
-					}
-				}
-		);
+	new AbstractModule() {
+		@Override
+		protected void configure() {
+			bind(RandomNumberGenerator.class);
+			install(new EtcdCacheableModule(config));
+		}
+	});
 ```
 
 ####Slamming the annotations on methods, fields, local variables
@@ -28,5 +26,4 @@ public double getRandomInt() {
 ```
 
 The ```@EtcdCacheable``` will first lookup etcd for matching key, in this case the method name, if found, will return 
-without executing the function. If value is not found, it will execute the method and store the key-value in etcd store
-
+without executing the function. If value is not found, it will execute the method and store the key-value in etcd store.
