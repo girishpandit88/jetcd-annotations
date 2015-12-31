@@ -10,7 +10,6 @@ final Injector injector = Guice.createInjector(
 	new AbstractModule() {
 		@Override
 		protected void configure() {
-			bind(RandomNumberGenerator.class);
 			install(new EtcdCacheableModule(config));
 		}
 	});
