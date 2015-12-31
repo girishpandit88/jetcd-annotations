@@ -1,6 +1,6 @@
 EtcdJava annotations
 ======================================
-[coreos/etcd](https://github.com/coreos/etcd) is a distributed highly available key-value store. There are many java etcd clients out there. This project adds ability to annotate methods, variables for caching values into etcd using the java etcd client.
+[coreos/etcd](https://github.com/coreos/etcd) is a distributed highly available key-value store. There are many java etcd clients out there. This project adds ability to annotate methods, variables for caching values into etcd using one such java etcd client.
 
 ##Usage
 
