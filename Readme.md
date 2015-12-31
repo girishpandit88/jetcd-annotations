@@ -15,7 +15,7 @@ so I use its IP as a HOST_IP for etcd server IP.
 ```
 You can verify that etcd is running locally by running following command
 ```bash
-> export ETCD_IP=$(docker-machine ip default)
+> export ETCD_IP=$(docker-machine ip default):4001
 > curl -L ETCD_IP/version
 ```
 You can then use this IP and supply in `application.conf` under `etcd.endpoint` config property.
