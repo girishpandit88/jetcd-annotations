@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-dark.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>jetcd-annotations by girishpandit88</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>jetcd-annotations</h1>
+          <h2>coreos/etcd java annotations</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/girishpandit88/jetcd-annotations/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/girishpandit88/jetcd-annotations/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/girishpandit88/jetcd-annotations" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="etcdjava-annotations" class="anchor" href="#etcdjava-annotations" aria-hidden="true"><span class="octicon octicon-link"></span></a>EtcdJava annotations</h1>
+
+<p><a href="https://github.com/coreos/etcd">coreos/etcd</a> is a distributed highly available key-value store. There are many java etcd clients out there. This project adds ability to annotate methods, variables for caching values into etcd using one such java etcd client.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h4>
+<a id="starting-etcd-locally" class="anchor" href="#starting-etcd-locally" aria-hidden="true"><span class="octicon octicon-link"></span></a>Starting etcd locally</h4>
+
+<p>This step assumes you have a docker daemon running locally. I use docker-machine for OSX, 
+so I use its IP as a HOST_IP for etcd server IP.</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-k">&gt;</span> <span class="pl-c1">cd</span> etc
+<span class="pl-k">&gt;</span> ./start-jetcd.sh</pre></div>
+
+<p>You can verify that etcd is running locally by running following command</p>
+
+<div class="highlight highlight-source-shell"><pre><span class="pl-k">&gt;</span> <span class="pl-k">export</span> ETCD_IP=<span class="pl-s"><span class="pl-pds">$(</span>docker-machine ip default<span class="pl-pds">)</span></span>:4001
+<span class="pl-k">&gt;</span> curl -L ETCD_IP/version</pre></div>
+
+<p>You can then use this IP and supply in <code>application.conf</code> under <code>etcd.endpoint</code> config property.</p>
+
+<h4>
+<a id="installing-the-etcdcacheablemodule" class="anchor" href="#installing-the-etcdcacheablemodule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installing the EtcdCacheableModule</h4>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">final</span> <span class="pl-smi">Injector</span> injector <span class="pl-k">=</span> <span class="pl-smi">Guice</span><span class="pl-k">.</span>createInjector(
+    <span class="pl-k">new</span> <span class="pl-smi">AbstractModule</span>() {
+        <span class="pl-k">@Override</span>
+        <span class="pl-k">protected</span> <span class="pl-k">void</span> <span class="pl-en">configure</span>() {
+            install(<span class="pl-k">new</span> <span class="pl-smi">EtcdCacheableModule</span>(config));
+        }
+    });</pre></div>
+
+<h4>
+<a id="slamming-the-annotations-on-methods-fields-local-variables" class="anchor" href="#slamming-the-annotations-on-methods-fields-local-variables" aria-hidden="true"><span class="octicon octicon-link"></span></a>Slamming the annotations on methods, fields, local variables</h4>
+
+<div class="highlight highlight-source-java"><pre>@<span class="pl-smi">EtcdCacheable</span>
+<span class="pl-k">public</span> <span class="pl-k">double</span> getRandomInt() {
+    <span class="pl-k">double</span> result <span class="pl-k">=</span> <span class="pl-smi">Math</span><span class="pl-k">.</span>random();
+    <span class="pl-k">return</span> result;
+}</pre></div>
+
+<p>The <code>@EtcdCacheable</code> will first lookup etcd for matching key, in this case the method name, if found, will return 
+without executing the function. If value is not found, it will execute the method and store the key-value in etcd store.</p>
+        </section>
+
+        <footer>
+          jetcd-annotations is maintained by <a href="https://github.com/girishpandit88">girishpandit88</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
